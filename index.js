@@ -2,25 +2,18 @@ const express = require('express')
 const app = express()
 
 //middleware
- let logUser = function (req, res, next) {
-     let user = 'Autorizacion'
-    if (user.includes(req.get('Autorizacion'))) {
-        res.status(403).send('')
-    } else return res.send('test')
+let authMiddleware = function (req, res, next) {
+    if (req.get('Authorization') !== 'Bearer 65a83e72c7e990a3e6565ae8b7cc071c') {
+        res.status(403).send('No authorized')
+    }
 
     next()
-} 
+}
 
-app.use(logUser)
+app.use(authMiddleware)
 
 app.get('/user', async function (req, res) {
-    res.send('asd')
+    res.status(200).send('OK')
 })
 
-app.get('/Autorizacion', async function (req, res) {
-
-res.send('asd')
-
-})
-
-app.listen(5004)
+app.listen(5005)
