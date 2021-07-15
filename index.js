@@ -1,4 +1,5 @@
 const express = require('express')
+const fs = require('fs');
 const app = express()
 
 //middleware
@@ -10,10 +11,36 @@ let authMiddleware = function (req, res, next) {
     next()
 }
 
+const logMiddleware = function (req, res, next) {
+
+    const now = new Date()
+    const date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + '-' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
+    //TODO poner bien la fecha
+    const newLog = [
+        req.ip,
+        date,
+        req.method,
+        req.path
+    ].join(',')
+
+    //TODO poner el nombre bien del
+    const fileName = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + '.log'
+
+    fs.appendFileSync(fileName, newLog)
+    fs.appendFileSync(fileName, '\r\n')
+
+    next()
+}
+
+app.use(logMiddleware)
 app.use(authMiddleware)
 
 app.get('/user', async function (req, res) {
     res.status(200).send('OK')
 })
 
-app.listen(5005)
+app.post('/', function (req, res) {
+
+})
+
+app.listen(5006)
