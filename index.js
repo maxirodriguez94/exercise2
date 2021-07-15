@@ -15,7 +15,7 @@ const logMiddleware = function (req, res, next) {
 
     const now = new Date()
     const date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + '-' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
-    //TODO poner bien la fecha
+
     const newLog = [
         req.ip,
         date,
@@ -23,7 +23,6 @@ const logMiddleware = function (req, res, next) {
         req.path
     ].join(',')
 
-    //TODO poner el nombre bien del
     const fileName = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + '.log'
 
     fs.appendFileSync(fileName, newLog)
