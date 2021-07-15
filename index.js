@@ -11,7 +11,7 @@ let authMiddleware = function (req, res, next) {
     next()
 }
 
-const logMiddleware = function (req, res, next) {
+let logMiddleware = function (req, res, next) {
 
     const now = new Date()
     const date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + '-' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
